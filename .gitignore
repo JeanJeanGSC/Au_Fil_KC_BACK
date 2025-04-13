@@ -1,0 +1,57 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+*.war
+*.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+#autreIDE
+
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.vcxproj
+*.vcxproj.user
+*.code-workspace
+
+# Environment variables and configuration
+.env
+.env.*.local
+
+# Fichiers locaux spécifiques à la machine
+*.DS_Store
+*.swp
+Thumbs.db
