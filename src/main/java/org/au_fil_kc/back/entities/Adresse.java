@@ -25,9 +25,6 @@ public class Adresse {
     @Column(nullable = false)
     private String ville;
 
-    @Column
-    private String province;
-
     @Column(nullable = false)
     private String codePostal;
 
