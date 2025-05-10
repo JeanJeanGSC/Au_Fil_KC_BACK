@@ -9,6 +9,6 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface ProduitRepositrory extends JpaRepository<Produit, String> {
-//    @Query(value = "SELECT * FROM produit WHERE enSolde = true")
+//    @Query(value = "SELECT * FROM produit WHERE en_solde = true")
 //    List<Produit> findAllOnSale();
 }

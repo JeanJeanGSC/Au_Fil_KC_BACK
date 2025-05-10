@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import java.util.List;
 
 @Entity
 @Data
@@ -40,4 +41,7 @@ public class Produit {
     private int inventaire;
 
     private boolean enSolde;
+
+    @OneToMany(mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Photo> photos;
 }
