@@ -8,7 +8,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import java.util.List;
 
 @RepositoryRestResource
-public interface ProduitRepositrory extends JpaRepository<Produit, String> {
-//    @Query(value = "SELECT * FROM produit WHERE en_solde = true")
-//    List<Produit> findAllOnSale();
+public interface ProduitRepository extends JpaRepository<Produit, String> {
+    @Query(value = "SELECT * FROM produit WHERE en_solde = TRUE", nativeQuery = true)
+    List<Produit> findAllOnSale();
 }
