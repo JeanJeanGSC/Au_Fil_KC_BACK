@@ -19,7 +19,7 @@ public class ServiceController {
 
     @PostMapping
     public Services createService(@RequestBody Services service) {
-        return serviceService.saveServices(service);
+        return serviceService.createServices(service);
     }
 
     @GetMapping
@@ -33,8 +33,12 @@ public class ServiceController {
         return serviceService.getServicesById(id);
     }
 
+    @PutMapping("/mod{id}")
+    public Services updateService(@PathVariable String id, @RequestBody Services service) {
+        return serviceService.updateProduit(id, service);
+    }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/d{id}")
     public void deleteService(@PathVariable String id) {
         serviceService.deleteServicesById(id);
     }

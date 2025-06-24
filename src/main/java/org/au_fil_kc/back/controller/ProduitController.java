@@ -19,7 +19,8 @@ public class ProduitController {
 
     @PostMapping
     public Produit createProduit(@RequestBody Produit produit) {
-        return produitService.saveProduit(produit);
+        return produitService.createProduit(produit);
+//        return photoProduit
     }
 
     @GetMapping
@@ -38,12 +39,12 @@ public class ProduitController {
         return produitService.getProduitById(id);
     }
 
-//    @PutMapping("/{id}")
-//    public Produit updateProduit(@PathVariable String id, @RequestBody Produit produit) {
-//        return produitService.updateProduit(id, produit);
-//    }
+    @PutMapping("/mod{id}")
+    public Produit updateProduit(@RequestBody Produit produit) {
+        return produitService.updateProduit(produit);
+    }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/d{id}")
     public void deleteProduit(@PathVariable String id) {
         produitService.deleteProduitById(id);
     }
