@@ -3,6 +3,7 @@ package org.au_fil_kc.back.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,7 +11,7 @@ import java.util.List;
 public class Produit {
     public Produit() { }
     public Produit(String id, String nom, String taille, String description, String entretien, double prixVente,
-                   double prixProd, double prixRabais, int inventaire, boolean enSolde, List<PhotoProduit> photos) {
+                   double prixProd, double prixRabais, int inventaire, boolean enSolde, List<PhotoPrd> photos) {
         this.id = id;
         this.nom = nom;
         this.taille = taille;
@@ -55,7 +56,7 @@ public class Produit {
 
     @JsonIgnore
     @OneToMany(mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PhotoProduit> photos;
+    private List<PhotoPrd> photos  = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -75,6 +76,9 @@ public class Produit {
 
     public String getId() {
         return id;
+    }
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNom() {
@@ -140,10 +144,11 @@ public class Produit {
         this.enSolde = enSolde;
     }
 
-    public List<PhotoProduit> getPhotos() {
+    public List<PhotoPrd> getPhotos() {
         return photos;
     }
-    public void setPhotos(List<PhotoProduit> photos) {
+    public void setPhotos(List<PhotoPrd> photos) {
         this.photos = photos;
     }
+
 }

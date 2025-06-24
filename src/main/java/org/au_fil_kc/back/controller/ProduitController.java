@@ -20,7 +20,6 @@ public class ProduitController {
     @PostMapping
     public Produit createProduit(@RequestBody Produit produit) {
         return produitService.createProduit(produit);
-//        return photoProduit
     }
 
     @GetMapping

@@ -6,8 +6,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "photo_services")
-public class PhotoServ extends Photo {
+@Table(name = "photo_service")
+public class PhotoSrv extends Photo {
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
     private Services service;

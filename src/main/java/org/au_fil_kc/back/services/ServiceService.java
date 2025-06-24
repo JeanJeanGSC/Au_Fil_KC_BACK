@@ -1,7 +1,9 @@
 package org.au_fil_kc.back.services;
 
+import org.au_fil_kc.back.entities.PhotoSrv;
 import org.au_fil_kc.back.entities.Services;
 import org.au_fil_kc.back.repositories.ServiceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -12,8 +14,13 @@ import java.util.Optional;
 public class ServiceService {
     private static long idNumber = 1L;
     private final ServiceRepository serviceRepository;
+    private final PhotoService photoService;
 
-    public ServiceService(ServiceRepository serviceRepository) { this.serviceRepository = serviceRepository;}
+    @Autowired
+    public ServiceService(ServiceRepository serviceRepository , PhotoService photoService) {
+        this.serviceRepository = serviceRepository;
+        this.photoService = photoService;
+    }
 
     public List<Services> getAllServices() {
         return serviceRepository.findAll();

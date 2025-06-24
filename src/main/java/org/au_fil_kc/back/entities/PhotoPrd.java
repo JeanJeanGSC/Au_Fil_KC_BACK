@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "photo_produit")
-public class PhotoProd extends Photo {
+public class PhotoPrd extends Photo {
     @ManyToOne
     @JoinColumn(name = "produit_id", nullable = false)
     private Produit produit;
