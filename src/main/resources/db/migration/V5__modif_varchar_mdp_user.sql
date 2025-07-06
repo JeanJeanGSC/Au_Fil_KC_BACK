@@ -1,0 +1,2 @@
+ALTER TABLE utilisateur
+ALTER COLUMN mot_de_passe TYPE VARCHAR(120);
