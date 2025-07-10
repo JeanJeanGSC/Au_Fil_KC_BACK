@@ -18,7 +18,7 @@ public class ProduitController {
         this.produitService = produitService;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public Produit createProduit(@RequestBody Produit produit) {
         return produitService.createProduit(produit);
@@ -40,13 +40,13 @@ public class ProduitController {
         return produitService.getProduitById(id);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/mod{id}")
     public Produit updateProduit(@RequestBody Produit produit) {
         return produitService.updateProduit(produit);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/d{id}")
     public void deleteProduit(@PathVariable String id) {
         produitService.deleteProduitById(id);

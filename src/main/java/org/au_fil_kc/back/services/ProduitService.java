@@ -30,7 +30,7 @@ public class ProduitService {
     public Produit createProduit(Produit produit) {
             produit.setId(gererateNewId());
             produit.getPhotos().forEach(photoP -> {
-                photoP.setId(photoService.generateNewId());
+                photoP.setId(photoService.generateNewId("P"));
                 photoP.setProduit(produit);
             });
         return produitRepository.save(produit);
@@ -83,7 +83,7 @@ public class ProduitService {
                                             return foundPhoto;
                                         })
                                         .orElseGet(() -> {
-                                            newPhoto.setId(photoService.generateNewId());
+                                            newPhoto.setId(photoService.generateNewId("P"));
                                             newPhoto.setProduit(existingProduit);
                                             return newPhoto;
                                         });
@@ -98,7 +98,7 @@ public class ProduitService {
                 .orElseThrow(() -> new RuntimeException("Produit " + updatedProduit.getId() + " non trouvé!"));
     }
 
-    public synchronized String gererateNewId() {
+    private synchronized String gererateNewId() {
         String id = "P" + idNumber++ + "RD";
         return id;
     }

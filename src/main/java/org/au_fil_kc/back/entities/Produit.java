@@ -2,29 +2,12 @@ package org.au_fil_kc.back.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "produit", schema = "public")
 public class Produit {
-    public Produit() { }
-    public Produit(String id, String nom, String taille, String description, String entretien, double prixVente,
-                   double prixProd, double prixRabais, int inventaire, boolean enSolde, List<PhotoPrd> photos) {
-        this.id = id;
-        this.nom = nom;
-        this.taille = taille;
-        this.description = description;
-        this.entretien = entretien;
-        this.prixVente = prixVente;
-        this.prixProd = prixProd;
-        this.prixRabais = prixRabais;
-        this.inventaire = inventaire;
-        this.enSolde = enSolde;
-        this.photos = photos;
-    }
-
     @Id
     private String id;
 
@@ -58,22 +41,24 @@ public class Produit {
     @OneToMany(mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PhotoPrd> photos  = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return "Produit{" +
-                "enSolde=" + enSolde +
-                ", inventaire=" + inventaire +
-                ", prixRabais=" + prixRabais +
-                ", prixProd=" + prixProd +
-                ", prixVente=" + prixVente +
-                ", entretien='" + entretien + '\'' +
-                ", description='" + description + '\'' +
-                ", taille='" + taille + '\'' +
-                ", nom='" + nom + '\'' +
-                ", id='" + id + '\'' +
-                '}';
+    /// ---------------------- CONSTRUCTEUR ------------------------------------
+    public Produit() { }
+    public Produit(String id, String nom, String taille, String description, String entretien, double prixVente,
+                   double prixProd, double prixRabais, int inventaire, boolean enSolde, List<PhotoPrd> photos) {
+        this.id = id;
+        this.nom = nom;
+        this.taille = taille;
+        this.description = description;
+        this.entretien = entretien;
+        this.prixVente = prixVente;
+        this.prixProd = prixProd;
+        this.prixRabais = prixRabais;
+        this.inventaire = inventaire;
+        this.enSolde = enSolde;
+        this.photos = photos;
     }
 
+    /// ---------------------- GETTER & SETTER ------------------------------------
     public String getId() {
         return id;
     }
@@ -149,6 +134,23 @@ public class Produit {
     }
     public void setPhotos(List<PhotoPrd> photos) {
         this.photos = photos;
+    }
+
+    /// ---------------------- TO STRING ------------------------------------
+    @Override
+    public String toString() {
+        return "Produit{" +
+                "enSolde=" + enSolde +
+                ", inventaire=" + inventaire +
+                ", prixRabais=" + prixRabais +
+                ", prixProd=" + prixProd +
+                ", prixVente=" + prixVente +
+                ", entretien='" + entretien + '\'' +
+                ", description='" + description + '\'' +
+                ", taille='" + taille + '\'' +
+                ", nom='" + nom + '\'' +
+                ", id='" + id + '\'' +
+                '}';
     }
 
 }

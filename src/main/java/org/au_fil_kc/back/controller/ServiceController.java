@@ -3,8 +3,8 @@ package org.au_fil_kc.back.controller;
 import org.au_fil_kc.back.entities.Services;
 import org.au_fil_kc.back.services.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -16,10 +16,10 @@ public class ServiceController {
     @Autowired
     public ServiceController(ServiceService serviceService) { this.serviceService = serviceService; }
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public Services createService(@RequestBody Services service) {
-        return serviceService.createServices(service);
+        return serviceService.createService(service);
     }
 
     @GetMapping
@@ -33,11 +33,13 @@ public class ServiceController {
         return serviceService.getServicesById(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/mod{id}")
-    public Services updateService(@PathVariable String id, @RequestBody Services service) {
-        return serviceService.updateProduit(id, service);
+    public Services updateService(@RequestBody Services service) {
+        return serviceService.updateService(service);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/d{id}")
     public void deleteService(@PathVariable String id) {
         serviceService.deleteServicesById(id);

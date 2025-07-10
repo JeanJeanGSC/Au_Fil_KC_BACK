@@ -25,7 +25,7 @@ public class Adresse {
 
 //    @OneToMany(mappedBy = "adresse", cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JsonIgnore
-//    private List<Client> client; //faire une classe user avec un role CLIENT ou ADMIN
+//    private List<Client> client; //faire une classe user avec un role ROLE_CLIENT ou ROLE_ADMIN
 
     public Adresse() { }
     public Adresse(String pays, String codePostal, String ville, String adresse, String id) {

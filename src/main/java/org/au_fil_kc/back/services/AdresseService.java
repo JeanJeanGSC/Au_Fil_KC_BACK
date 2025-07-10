@@ -11,6 +11,7 @@ import java.util.Optional;
 @Service
 @Transactional
 public class AdresseService {
+    private static long idNumber = 1L;
     private final AdresseRepository adresseRepository;
 
     public AdresseService(AdresseRepository adresseRepository) {
@@ -25,7 +26,26 @@ public class AdresseService {
         return adresseRepository.findById(id);
     }
 
-    public Adresse saveAdresse(Adresse adresse) { return adresseRepository.save(adresse); }
+    public Adresse createAdresse(Adresse adresse) {
+        adresse.setId(gererateNewId());
+        return adresseRepository.save(adresse);
+    }
+
+    public Adresse updateAdresse(String id, Adresse updatedAdresse) {
+        return adresseRepository.findById(id)
+                .map(existingAdresse -> {
+                    existingAdresse.setAdresse(updatedAdresse.getAdresse());
+                    existingAdresse.setCodePostal(updatedAdresse.getCodePostal());
+                    existingAdresse.setVille(updatedAdresse.getVille());
+                    existingAdresse.setPays(updatedAdresse.getPays());
+                    return adresseRepository.save(existingAdresse);
+                })
+                .orElseThrow(() -> new RuntimeException("Adresse " + updatedAdresse.getId() + " non trouvé!"));
+    }
 
     public void deleteAdresseById(String id) { adresseRepository.deleteById(id); }
+
+    private synchronized String gererateNewId() {
+        return "A" + idNumber++ + "DR";
+    }
 }
