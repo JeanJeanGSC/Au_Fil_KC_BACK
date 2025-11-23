@@ -17,11 +17,11 @@ public class Services {
     @Column(nullable = false)
     private String description;
 
+    // TODO: prix inutile a supprimer ?
     @Column(nullable = false)
     private double prix; //Prix a l'heure ou pour le service entier ?
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
+    
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<PhotoSrv> photos = new ArrayList<>();
 
     /// ---------------------- CONSTRUCTEUR ------------------------------------
