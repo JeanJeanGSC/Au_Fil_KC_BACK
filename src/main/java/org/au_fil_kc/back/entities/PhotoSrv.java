@@ -12,12 +12,12 @@ public class PhotoSrv extends Photo {
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
     @JsonIgnore
-    private Services service;
+    private Prestation service;
 
-    public Services getService() {
+    public Prestation getService() {
         return service;
     }
-    public void setService(Services service) {
+    public void setService(Prestation service) {
         this.service = service;
     }
 }

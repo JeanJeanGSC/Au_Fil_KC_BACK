@@ -34,7 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("auth/**").permitAll()
                         // La lecture des produits est publique
                         .requestMatchers(HttpMethod.GET, "/produits/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/services/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/prestations/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/adresses").permitAll()
                         // TODO ajouter les permission pour les services aussi et tout autre requête qui doivent être accessible par un client
                         // Toutes les autres requêtes pour produits nécessitent une authentification (POST, DELETE, UPDATE)

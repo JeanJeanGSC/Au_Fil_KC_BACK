@@ -1,13 +1,12 @@
 package org.au_fil_kc.back.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "service")
-public class Services {
+public class Prestation {
     @Id
     private String id;
 
@@ -17,16 +16,18 @@ public class Services {
     @Column(nullable = false)
     private String description;
 
-    // TODO: prix inutile a supprimer ?
-    @Column(nullable = false)
-    private double prix; //Prix a l'heure ou pour le service entier ?
-    
+    @Column(name = "sous_titre")
+    private String sousTitre;
+
+    @Column
+    private Double prix;
+
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<PhotoSrv> photos = new ArrayList<>();
 
     /// ---------------------- CONSTRUCTEUR ------------------------------------
-    public Services() { }
-    public Services(String id, String nom, String description, double prix, List<PhotoSrv> photos) {
+    public Prestation() { }
+    public Prestation(String id, String nom, String description, Double prix, List<PhotoSrv> photos) {
         this.id = id;
         this.nom = nom;
         this.description = description;
@@ -57,7 +58,7 @@ public class Services {
     public double getPrix() {
         return prix;
     }
-    public void setPrix(double prix) {
+    public void setPrix(Double prix) {
         this.prix = prix;
     }
 
