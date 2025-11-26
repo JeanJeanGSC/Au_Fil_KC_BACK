@@ -48,6 +48,10 @@ public class Prestation {
         this.nom = nom;
     }
 
+    public String getSousTitre() { return sousTitre; }
+
+    public void setSousTitre(String sousTitre) { this.sousTitre = sousTitre; }
+
     public String getDescription() {
         return description;
     }
@@ -55,7 +59,7 @@ public class Prestation {
         this.description = description;
     }
 
-    public double getPrix() {
+    public Double getPrix() {
         return prix;
     }
     public void setPrix(Double prix) {

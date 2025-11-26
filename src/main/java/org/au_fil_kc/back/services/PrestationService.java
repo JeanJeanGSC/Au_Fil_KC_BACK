@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class PrestationService {
-    private static long idNumber = 1L;
     private final PrestationRepository prestationRepository;
     private final PhotoService photoService;
 
@@ -33,10 +32,12 @@ public class PrestationService {
 
     public Prestation createService(Prestation service, String type) {
         service.setId(generateNewId(type));
-        service.getPhotos().forEach(photoS -> {
-            photoS.setId(photoService.generateNewId("S"));
-            photoS.setService(service);
-        });
+        if (service.getId() != null) {
+            service.getPhotos().forEach(photoS -> {
+                photoS.setId(photoService.generateNewId(type));
+                photoS.setService(service);
+            });
+        }
         return prestationRepository.save(service);
     }
 
@@ -52,8 +53,8 @@ public class PrestationService {
         return prestationRepository.findById(updatedService.getId())
                 .map(existingService -> {
                     existingService.setNom(updatedService.getNom());
+                    existingService.setSousTitre(updatedService.getSousTitre());
                     existingService.setDescription(updatedService.getDescription());
-                    // TODO : Ajuster pour autoriser un champ prix vide
                     existingService.setPrix(updatedService.getPrix());
 
                     // 2. Gérer la liste des photos
@@ -82,7 +83,7 @@ public class PrestationService {
                                             return newPhoto;
                                         });
                             })
-                            .collect(Collectors.toList());
+                            .toList();
 
                     // Mettre à jour la liste des photos du produit existant
                     existingService.getPhotos().clear(); // Supprime toutes les références existantes
@@ -96,7 +97,30 @@ public class PrestationService {
     }
 
     private synchronized String generateNewId(String type) {
-        return type.equals("S") ? "S" + idNumber++ + "RV" : "C" + idNumber++ + "RS";
+        String prefix = type.equals("S") ? "S" : "C";
+        String suffix = type.equals("S") ? "RV" : "RS";
+
+        // Récupère tous les IDs existants de ce type
+        List<String> existingIds = prestationRepository.findAll().stream()
+                .map(Prestation::getId)
+                .filter(id -> id != null && id.startsWith(prefix) && id.endsWith(suffix))
+                .toList();
+
+        // Trouve le chiffre le plus haut (ex: S2RV -> 2)
+        long maxId = existingIds.stream()
+                .mapToLong(id -> {
+                    try {
+                        // On extrait le chiffre entre le préfixe et le suffixe
+                        String numberPart = id.substring(prefix.length(), id.length() - suffix.length());
+                        return Long.parseLong(numberPart);
+                    } catch (NumberFormatException e) {
+                        return 0L;
+                    }
+                })
+                .max()
+                .orElse(0L); // Si aucun service, on commence à 0
+
+        return prefix + (maxId + 1) + suffix;
     }
 
 }
