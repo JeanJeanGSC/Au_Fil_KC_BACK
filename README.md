@@ -1,3 +1,3 @@
-Orchestration d'inteliigence artificiel pour la création du back d'un site professionnel en utilisant Java Spring, PostgreSQL, supaBase, Flyway. 
+Création du back d'un site professionnel en utilisant Java Spring, et supaBase, Flyway pour la DB. 
 
 Work in progress
