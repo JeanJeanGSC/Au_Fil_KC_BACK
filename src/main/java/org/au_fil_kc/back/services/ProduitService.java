@@ -51,7 +51,6 @@ public class ProduitService {
     public Produit updateProduit(Produit updatedProduit) {
         return produitRepository.findById(updatedProduit.getId())
                 .map(existingProduit -> {
-                    // 1. Mettre à jour les champs simples du produit
                     existingProduit.setNom(updatedProduit.getNom());
                     existingProduit.setTaille(updatedProduit.getTaille());
                     existingProduit.setDescription(updatedProduit.getDescription());
@@ -62,13 +61,11 @@ public class ProduitService {
                     existingProduit.setEnSolde(updatedProduit.isEnSolde());
                     existingProduit.setInventaire(updatedProduit.getInventaire());
 
-                    // 2. Gérer la liste des photos
-                    // Clonons l'ancienne liste pour la manipulation et la comparaison
+                    // Copy de l'ancienne liste pour la manipulation et la comparaison
                     List<PhotoPrd> oldPhotos = existingProduit.getPhotos();
                     List<PhotoPrd> newPhotos = updatedProduit.getPhotos() != null ? updatedProduit.getPhotos() : List.of();
 
                     // Créer une liste pour les photos à ajouter/mettre à jour sur le produit existant
-                    // On ne manipule pas oldPhotos directement pour éviter ConcurrentModificationException
                     List<PhotoPrd> photosToPersist = newPhotos.stream()
                             .map(newPhoto -> {
                                 // Tenter de trouver la photo existante par ID
@@ -76,7 +73,6 @@ public class ProduitService {
                                         .filter(oldPhoto -> oldPhoto.getId() != null && oldPhoto.getId().equals(newPhoto.getId()))
                                         .findFirst()
                                         .map(foundPhoto -> {
-                                            // Photo existante: mettre à jour ses propriétés
                                             foundPhoto.setUrl(newPhoto.getUrl());
                                             foundPhoto.setOrdre(newPhoto.getOrdre());
                                             foundPhoto.setProduit(existingProduit);
@@ -91,8 +87,8 @@ public class ProduitService {
                             .collect(Collectors.toList());
 
                     // Mettre à jour la liste des photos du produit existant
-                    existingProduit.getPhotos().clear(); // Supprime toutes les références existantes
-                    existingProduit.getPhotos().addAll(photosToPersist); // Ajoute les nouvelles/mises à jour
+                    existingProduit.getPhotos().clear();
+                    existingProduit.getPhotos().addAll(photosToPersist);
                     return produitRepository.save(existingProduit);
                 })
                 .orElseThrow(() -> new RuntimeException("Produit " + updatedProduit.getId() + " non trouvé!"));

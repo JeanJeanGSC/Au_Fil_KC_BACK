@@ -57,21 +57,17 @@ public class PrestationService {
                     existingService.setDescription(updatedService.getDescription());
                     existingService.setPrix(updatedService.getPrix());
 
-                    // 2. Gérer la liste des photos
-                    // Clonons l'ancienne liste pour la manipulation et la comparaison
+                    // Copy de l'ancienne liste pour la manipulation et la comparaison
                     List<PhotoSrv> oldPhotos = existingService.getPhotos();
                     List<PhotoSrv> newPhotos = updatedService.getPhotos() != null ? updatedService.getPhotos() : List.of();
 
                     // Créer une liste pour les photos à ajouter/mettre à jour sur le service existant
-                    // On ne manipule pas oldPhotos directement pour éviter ConcurrentModificationException
                     List<PhotoSrv> photosToPersist = newPhotos.stream()
                             .map(newPhoto -> {
-                                // Tenter de trouver la photo existante par ID
                                 return oldPhotos.stream()
                                         .filter(oldPhoto -> oldPhoto.getId() != null && oldPhoto.getId().equals(newPhoto.getId()))
                                         .findFirst()
                                         .map(foundPhoto -> {
-                                            // Photo existante : mettre à jour ses propriétés
                                             foundPhoto.setUrl(newPhoto.getUrl());
                                             foundPhoto.setOrdre(newPhoto.getOrdre());
                                             foundPhoto.setService(existingService);
@@ -86,9 +82,8 @@ public class PrestationService {
                             .toList();
 
                     // Mettre à jour la liste des photos du produit existant
-                    existingService.getPhotos().clear(); // Supprime toutes les références existantes
-                    existingService.getPhotos().addAll(photosToPersist); // Ajoute les nouvelles/mises à jour
-
+                    existingService.getPhotos().clear();
+                    existingService.getPhotos().addAll(photosToPersist);
 
 
                     return prestationRepository.save(existingService);
@@ -106,11 +101,11 @@ public class PrestationService {
                 .filter(id -> id != null && id.startsWith(prefix) && id.endsWith(suffix))
                 .toList();
 
-        // Trouve le chiffre le plus haut (ex: S2RV -> 2)
+        // Trouve le chiffre le plus haut
         long maxId = existingIds.stream()
                 .mapToLong(id -> {
                     try {
-                        // On extrait le chiffre entre le préfixe et le suffixe
+                        // Extraction du chiffre entre le préfixe et le suffixe
                         String numberPart = id.substring(prefix.length(), id.length() - suffix.length());
                         return Long.parseLong(numberPart);
                     } catch (NumberFormatException e) {

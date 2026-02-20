@@ -37,15 +37,15 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/prestations/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/adresses").permitAll()
                         // TODO ajouter les permission pour les services aussi et tout autre requête qui doivent être accessible par un client
-                        // Toutes les autres requêtes pour produits nécessitent une authentification (POST, DELETE, UPDATE)
+                        // Toutes les autres requêtes pour produits nécessitent une authentification
                         .requestMatchers("/produits/**").authenticated()
                         // toutes les autres endpoint (URLs) qui ne sont pas explicitement couvert ont besoins d'un token !
                         .anyRequest().authenticated()
                 )
-                // On dit à Spring que la gestion de session sera sans état (stateless)
+                // Dit à Spring que la gestion de session sera stateless
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
-                // On ajoute notre filtre JWT avant le filtre de base de Spring
+                // Ajoute le filtre JWT avant le filtre de base de Spring
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

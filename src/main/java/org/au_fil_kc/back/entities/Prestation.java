@@ -84,8 +84,8 @@ public class Prestation {
 
 
 
-    // TODO est-ce qu'on garde add et remove ?
-    // Méthodes utilitaires pour une gestion propre de la bidirectionnalité (recommandé)
+    // TODO: est-ce qu'on garde add et remove ?
+    // Méthodes utilitaires pour une gestion propre de la bidirectionnalité
     public void addPhoto(PhotoSrv photo) {
         if (this.photos == null) {
             this.photos = new ArrayList<>();

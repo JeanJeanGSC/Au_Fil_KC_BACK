@@ -12,6 +12,8 @@ public abstract class Photo {
     @Column(nullable = false)
     private String url;
 
+    //TODO: Ajouter un champ titre comme légende de photo
+
     private int ordre;
 
     public String getId() {
