@@ -12,10 +12,11 @@ public abstract class Photo {
     @Column(nullable = false)
     private String url;
 
-    //TODO: Ajouter un champ titre comme légende de photo
+    private String description;
 
     private int ordre;
 
+    /// ---------------------- GETTER & SETTER ------------------------------------
     public String getId() {
         return id;
     }
@@ -27,6 +28,9 @@ public abstract class Photo {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    public String getDescription() { return description; }
+    public void setDescription(String desc) {this.description = desc;}
 
     public int getOrdre() {
         return ordre;
